@@ -186,8 +186,36 @@ void InsertInt(NODEPTR &pHead, int CoSo,int SoMu) {
     temp.SoMu = SoMu;
     InsertToTail(pHead, temp);
 }
-
-
+NODEPTR Search(NODEPTR pHead, int SoMu) {
+    for(NODEPTR i = pHead;i != NULL;i = i->pNext) {
+        if(i->data.SoMu == SoMu) {
+            return i;
+        }
+    }
+    return NULL;
+}
+void ChenKhongLap(NODEPTR &pHead,DonThuc dt) {
+    NODEPTR result = Search(pHead,dt.SoMu);
+    if(result== NULL) {
+        InsertToHead(pHead,dt);
+        Sort(pHead);
+    }
+    else {
+        result->data.CoSo += dt.CoSo;
+    }
+}
+NODEPTR NhanHaiDay(NODEPTR pHead1,NODEPTR pHead2) {
+    NODEPTR result = NULL;
+    for(NODEPTR i = pHead1;i != NULL;i = i->pNext) {
+        for(NODEPTR j = pHead2;j!= NULL;j = j->pNext) {
+            DonThuc newdt;
+            newdt.SoMu = j->data.SoMu+i->data.SoMu;
+            newdt.CoSo = j->data.CoSo*i->data.CoSo;
+            InsertToHead(result, newdt);
+        }
+    }
+    return result;
+}
 int main() {
     NODEPTR phead1 = NULL;
     InsertInt(phead1, 7, 4);
